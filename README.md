@@ -4,6 +4,7 @@ Trie and Ternary Search Tree implemented in Golang
 Trie outperforms TST slightly in CPU time, but costs much much more memory according to heap pprof.
 So I think TST is more suitable in production.
 
+## Performance
 **CPU Profile:**
 ```
 Trie    200000	      9964 ns/op
@@ -23,4 +24,24 @@ Dropped 42 nodes (cum <= 6.11MB)
          0     0% 99.92%  1193.62MB 97.67%  github.com/xiaonanln/go-trie-tst.(*Trie).Set
          0     0% 99.92%  1221.12MB 99.92%  main.testRoutine
          0     0% 99.92%  1222.12MB   100%  runtime.goexit
+```
+
+## Usage 
+
+```go
+import "github.com/xiaonanln/go-trie-tst"
+
+var tr trie_tst.TST // create a TST
+tr.Set("", 0) // set "" to 0
+tr.Set("abc", 3) // set "abc" to 3
+tr.Get("") // == 0
+tr.Get("a") // == nil
+tr.Get("ab") // == nil
+tr.Get("abc") // == 3
+
+subtr = tr.Sub("ab") // get sub TST under "ab"
+subtr.Get("") // == nil
+subtr.Get("a") // == nil
+subtr.Get("b") // == nil
+subtr.Get("c") // == 3, because "abc" == 3
 ```
