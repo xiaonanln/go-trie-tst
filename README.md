@@ -1,5 +1,5 @@
 # go-trie-tst
-
+[![travis](https://travis-ci.org/xiaonanln/go-trie-tst.svg?branch=master)](https://travis-ci.org/xiaonanln/go-trie-tst)
 [![GoCover](http://gocover.io/_badge/github.com/xiaonanln/go-trie-tst)](https://gocover.io/github.com/xiaonanln/go-trie-tst)
 
 Trie and Ternary Search Tree implemented in Golang
