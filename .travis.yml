@@ -4,8 +4,8 @@ go:
   - 1.8.x
 
 script:
-  go test .
-  go test -bench .
+  - go test .
+  - go test -bench .
 
 #after_success:
 #  - bash <(curl -s https://codecov.io/bash) -t 02233e4f-bf07-4d72-8023-8a47d27cc48b

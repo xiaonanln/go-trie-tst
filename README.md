@@ -1,4 +1,7 @@
 # go-trie-tst
+
+[![GoCover](http://gocover.io/_badge/github.com/xiaonanln/go-trie-tst)](https://gocover.io/github.com/xiaonanln/go-trie-tst)
+
 Trie and Ternary Search Tree implemented in Golang
 
 Trie outperforms TST slightly in CPU time, but costs much much more memory according to heap pprof.
