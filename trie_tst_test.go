@@ -3,6 +3,8 @@ package trie_tst
 import (
 	"testing"
 
+	"math/rand"
+
 	"github.com/bmizerany/assert"
 )
 
@@ -13,10 +15,15 @@ type tree interface {
 
 func TestTrie(t *testing.T) {
 	var tr Trie
-	testTrie(t, &tr)
+	testSearchTree(t, &tr)
 }
 
-func testTrie(t *testing.T, tr tree) {
+func TestTST(t *testing.T) {
+	var tr TST
+	testSearchTree(t, &tr)
+}
+
+func testSearchTree(t *testing.T, tr tree) {
 	tr.Set("", 0)
 	tr.Set("abc", 3)
 
@@ -28,10 +35,54 @@ func testTrie(t *testing.T, tr tree) {
 	var subtr tree
 	if trie, ok := tr.(*Trie); ok {
 		subtr = trie.SubTree("ab")
+	} else {
+		subtr = tr.(*TST).SubTree("ab")
 	}
 
 	assert.Equal(t, subtr.Get(""), nil)
 	assert.Equal(t, subtr.Get("a"), nil)
 	assert.Equal(t, subtr.Get("b"), nil)
 	assert.Equal(t, subtr.Get("c"), 3)
+
+	//testTreeMemoryAlloc(t, tr)
+}
+
+//func testTreeMemoryAlloc(t *testing.T, tr tree) {
+//	buf := make([]byte, 32)
+//	for i := 0; i < 100000; i++ {
+//		slen := 5 + rand.Intn(6)
+//		rand.Read(buf[:slen])
+//		s := string(buf[:slen])
+//		tr.Set(s, &[2]map[string]struct{}{})
+//	}
+//}
+//
+
+var (
+	benchmarkStrings []string
+)
+
+func init() {
+	for i := 0; i < 10; i++ {
+		b := make([]byte, 10+i*10)
+		rand.Read(b)
+		benchmarkStrings = append(benchmarkStrings, string(b))
+	}
+}
+
+func BenchmarkTrie(b *testing.B) {
+	benchmarkTree(b, &Trie{})
+}
+
+func BenchmarkTST(b *testing.B) {
+	benchmarkTree(b, &TST{})
+}
+
+func benchmarkTree(b *testing.B, tr tree) {
+	for i := 0; i < b.N; i++ {
+		for _, s := range benchmarkStrings {
+			tr.Set(s, i)
+			tr.Get(s)
+		}
+	}
 }

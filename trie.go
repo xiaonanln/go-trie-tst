@@ -5,18 +5,21 @@ type Trie struct {
 	children [256]*Trie
 }
 
+func (t *Trie) Child(c byte) *Trie {
+	child := t.children[c]
+	if child == nil {
+		child = &Trie{}
+		t.children[c] = child
+	}
+	return child
+}
+
 func (t *Trie) Set(s string, val interface{}) {
 	sl := len(s)
 	var set func(st *Trie, idx int)
 	set = func(st *Trie, idx int) {
 		if idx < sl {
-			c := s[idx]
-			child := st.children[c]
-			if child == nil {
-				child = &Trie{}
-				st.children[c] = child
-			}
-			set(child, idx+1)
+			set(st.Child(s[idx]), idx+1)
 		} else {
 			st.val = val
 		}
@@ -29,13 +32,7 @@ func (t *Trie) Get(s string) (val interface{}) {
 	var get func(st *Trie, idx int) (val interface{})
 	get = func(st *Trie, idx int) interface{} {
 		if idx < sl {
-			c := s[idx]
-			child := st.children[c]
-			if child == nil {
-				child = &Trie{}
-				st.children[c] = child
-			}
-			return get(child, idx+1)
+			return get(st.Child(s[idx]), idx+1)
 		} else {
 			return st.val
 		}
@@ -48,13 +45,7 @@ func (t *Trie) SubTree(s string) *Trie {
 	var subtree func(st *Trie, idx int) *Trie
 	subtree = func(st *Trie, idx int) *Trie {
 		if idx < sl {
-			c := s[idx]
-			child := st.children[c]
-			if child == nil {
-				child = &Trie{}
-				st.children[c] = child
-			}
-			return subtree(child, idx+1)
+			return subtree(st.Child(s[idx]), idx+1)
 		} else {
 			return st
 		}
