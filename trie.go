@@ -39,14 +39,13 @@ func (t *Trie) get(s string, idx int) (val interface{}) {
 }
 
 func (t *Trie) Sub(s string) *Trie {
-	sl := len(s)
-	var sub func(st *Trie, idx int) *Trie
-	sub = func(st *Trie, idx int) *Trie {
-		if idx < sl {
-			return sub(st.Child(s[idx]), idx+1)
-		} else {
-			return st
-		}
+	return t.sub(s, 0)
+}
+
+func (t *Trie) sub(s string, idx int) *Trie {
+	if idx < len(s) {
+		return t.Child(s[idx]).sub(s, idx+1)
+	} else {
+		return t
 	}
-	return sub(t, 0)
 }
