@@ -62,5 +62,4 @@ func (t *TST) sub(s string, idx int) *TST {
 	} else {
 		return t
 	}
-
 }
