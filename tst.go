@@ -29,40 +29,38 @@ func (t *TST) Child(c byte) *TST {
 }
 
 func (t *TST) Set(s string, val interface{}) {
-	sl := len(s)
-	var set func(st *TST, idx int)
-	set = func(st *TST, idx int) {
-		if idx < sl {
-			set(st.Child(s[idx]), idx+1)
-		} else {
-			st.val = val
-		}
+	t.set(s, val, 0)
+}
+
+func (t *TST) set(s string, val interface{}, idx int) {
+	if idx < len(s) {
+		t.Child(s[idx]).set(s, val, idx+1)
+	} else {
+		t.val = val
 	}
-	set(t, 0)
 }
 
 func (t *TST) Get(s string) (val interface{}) {
-	sl := len(s)
-	var get func(st *TST, idx int) (val interface{})
-	get = func(st *TST, idx int) interface{} {
-		if idx < sl {
-			return get(st.Child(s[idx]), idx+1)
-		} else {
-			return st.val
-		}
+	return t.get(s, 0)
+}
+
+func (t *TST) get(s string, idx int) (val interface{}) {
+	if idx < len(s) {
+		return t.Child(s[idx]).get(s, idx+1)
+	} else {
+		return t.val
 	}
-	return get(t, 0)
 }
 
 func (t *TST) Sub(s string) *TST {
-	sl := len(s)
-	var sub func(st *TST, idx int) *TST
-	sub = func(st *TST, idx int) *TST {
-		if idx < sl {
-			return sub(st.Child(s[idx]), idx+1)
-		} else {
-			return st
-		}
+	return t.sub(s, 0)
+}
+
+func (t *TST) sub(s string, idx int) *TST {
+	if idx < len(s) {
+		return t.Child(s[idx]).sub(s, idx+1)
+	} else {
+		return t
 	}
-	return sub(t, 0)
+
 }
