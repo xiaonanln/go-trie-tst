@@ -5,7 +5,7 @@ type TST struct {
 	right *TST
 	eq    *TST
 	eqkey byte
-	val   interface{}
+	Val   interface{}
 }
 
 func (t *TST) Child(c byte) *TST {
@@ -36,7 +36,7 @@ func (t *TST) set(s string, val interface{}, idx int) {
 	if idx < len(s) {
 		t.Child(s[idx]).set(s, val, idx+1)
 	} else {
-		t.val = val
+		t.Val = val
 	}
 }
 
@@ -48,7 +48,7 @@ func (t *TST) get(s string, idx int) (val interface{}) {
 	if idx < len(s) {
 		return t.Child(s[idx]).get(s, idx+1)
 	} else {
-		return t.val
+		return t.Val
 	}
 }
 
