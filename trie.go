@@ -15,40 +15,38 @@ func (t *Trie) Child(c byte) *Trie {
 }
 
 func (t *Trie) Set(s string, val interface{}) {
-	sl := len(s)
-	var set func(st *Trie, idx int)
-	set = func(st *Trie, idx int) {
-		if idx < sl {
-			set(st.Child(s[idx]), idx+1)
-		} else {
-			st.val = val
-		}
+	t.set(s, val, 0)
+}
+
+func (t *Trie) set(s string, val interface{}, idx int) {
+	if idx < len(s) {
+		t.Child(s[idx]).set(s, val, idx+1)
+	} else {
+		t.val = val
 	}
-	set(t, 0)
 }
 
 func (t *Trie) Get(s string) (val interface{}) {
-	sl := len(s)
-	var get func(st *Trie, idx int) (val interface{})
-	get = func(st *Trie, idx int) interface{} {
-		if idx < sl {
-			return get(st.Child(s[idx]), idx+1)
-		} else {
-			return st.val
-		}
-	}
-	return get(t, 0)
+	return t.get(s, 0)
 }
 
-func (t *Trie) SubTree(s string) *Trie {
+func (t *Trie) get(s string, idx int) (val interface{}) {
+	if idx < len(s) {
+		return t.Child(s[idx]).get(s, idx+1)
+	} else {
+		return t.val
+	}
+}
+
+func (t *Trie) Sub(s string) *Trie {
 	sl := len(s)
-	var subtree func(st *Trie, idx int) *Trie
-	subtree = func(st *Trie, idx int) *Trie {
+	var sub func(st *Trie, idx int) *Trie
+	sub = func(st *Trie, idx int) *Trie {
 		if idx < sl {
-			return subtree(st.Child(s[idx]), idx+1)
+			return sub(st.Child(s[idx]), idx+1)
 		} else {
 			return st
 		}
 	}
-	return subtree(t, 0)
+	return sub(t, 0)
 }

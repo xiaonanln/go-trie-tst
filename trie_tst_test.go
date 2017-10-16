@@ -34,9 +34,9 @@ func testSearchTree(t *testing.T, tr tree) {
 
 	var subtr tree
 	if trie, ok := tr.(*Trie); ok {
-		subtr = trie.SubTree("ab")
+		subtr = trie.Sub("ab")
 	} else {
-		subtr = tr.(*TST).SubTree("ab")
+		subtr = tr.(*TST).Sub("ab")
 	}
 
 	assert.Equal(t, subtr.Get(""), nil)

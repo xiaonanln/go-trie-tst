@@ -54,15 +54,15 @@ func (t *TST) Get(s string) (val interface{}) {
 	return get(t, 0)
 }
 
-func (t *TST) SubTree(s string) *TST {
+func (t *TST) Sub(s string) *TST {
 	sl := len(s)
-	var subtree func(st *TST, idx int) *TST
-	subtree = func(st *TST, idx int) *TST {
+	var sub func(st *TST, idx int) *TST
+	sub = func(st *TST, idx int) *TST {
 		if idx < sl {
-			return subtree(st.Child(s[idx]), idx+1)
+			return sub(st.Child(s[idx]), idx+1)
 		} else {
 			return st
 		}
 	}
-	return subtree(t, 0)
+	return sub(t, 0)
 }
