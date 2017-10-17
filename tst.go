@@ -1,5 +1,6 @@
 package trietst
 
+// TST can be the root, and can be a sub-tree
 type TST struct {
 	left  *TST
 	right *TST
@@ -8,6 +9,7 @@ type TST struct {
 	Val   interface{}
 }
 
+// Child returns the child subtree of the current tree
 func (t *TST) Child(c byte) *TST {
 	if t.eq == nil {
 		t.eqkey = c
@@ -28,6 +30,7 @@ func (t *TST) Child(c byte) *TST {
 	}
 }
 
+// Set sets the value of string in the current tree
 func (t *TST) Set(s string, val interface{}) {
 	t.set(s, val, 0)
 }
@@ -40,6 +43,7 @@ func (t *TST) set(s string, val interface{}, idx int) {
 	}
 }
 
+// Get returns the value of string in the current tree
 func (t *TST) Get(s string) (val interface{}) {
 	return t.get(s, 0)
 }
@@ -52,6 +56,7 @@ func (t *TST) get(s string, idx int) (val interface{}) {
 	}
 }
 
+// Sub returns the subtree of the current tree with specified prefix
 func (t *TST) Sub(s string) *TST {
 	return t.sub(s, 0)
 }

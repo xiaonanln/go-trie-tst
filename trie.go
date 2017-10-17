@@ -1,10 +1,12 @@
 package trietst
 
+// Trie can be the root, and can be a sub-tree
 type Trie struct {
 	Val      interface{}
 	children [256]*Trie
 }
 
+// Child returns the child subtree of the current tree
 func (t *Trie) Child(c byte) *Trie {
 	child := t.children[c]
 	if child == nil {
@@ -14,6 +16,7 @@ func (t *Trie) Child(c byte) *Trie {
 	return child
 }
 
+// Set sets the value of string in the current tree
 func (t *Trie) Set(s string, val interface{}) {
 	t.set(s, val, 0)
 }
@@ -26,6 +29,7 @@ func (t *Trie) set(s string, val interface{}, idx int) {
 	}
 }
 
+// Get returns the value of string in the current tree
 func (t *Trie) Get(s string) (val interface{}) {
 	return t.get(s, 0)
 }
@@ -38,6 +42,7 @@ func (t *Trie) get(s string, idx int) (val interface{}) {
 	}
 }
 
+// Sub returns the subtree of the current tree with specified prefix
 func (t *Trie) Sub(s string) *Trie {
 	return t.sub(s, 0)
 }
