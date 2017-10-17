@@ -16,8 +16,8 @@ import (
 )
 
 func testRoutine() {
-	trie := &trie_tst.Trie{}
-	tst := &trie_tst.TST{}
+	trie := &trietst.Trie{}
+	tst := &trietst.TST{}
 
 	for {
 		slen := 5 + rand.Intn(10)

@@ -1,4 +1,4 @@
-package trie_tst
+package trietst
 
 type TST struct {
 	left  *TST

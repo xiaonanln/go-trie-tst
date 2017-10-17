@@ -1,4 +1,4 @@
-package trie_tst
+package trietst
 
 import (
 	"testing"

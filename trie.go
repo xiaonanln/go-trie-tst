@@ -1,4 +1,4 @@
-package trie_tst
+package trietst
 
 type Trie struct {
 	Val      interface{}
