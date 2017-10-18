@@ -23,6 +23,11 @@ func TestTST(t *testing.T) {
 	testSearchTree(t, &tr)
 }
 
+func TestTrieMO(t *testing.T) {
+	var tr TrieMO
+	testSearchTree(t, &tr)
+}
+
 func testSearchTree(t *testing.T, tr tree) {
 	tr.Set("", 0)
 	tr.Set("abc", 3)
@@ -35,8 +40,10 @@ func testSearchTree(t *testing.T, tr tree) {
 	var subtr tree
 	if trie, ok := tr.(*Trie); ok {
 		subtr = trie.Sub("ab")
-	} else {
-		subtr = tr.(*TST).Sub("ab")
+	} else if tst, ok := tr.(*TST); ok {
+		subtr = tst.Sub("ab")
+	} else if triemo, ok := tr.(*TrieMO); ok {
+		subtr = triemo.Sub("ab")
 	}
 
 	assert.Equal(t, subtr.Get(""), nil)
@@ -76,6 +83,10 @@ func BenchmarkTrie(b *testing.B) {
 
 func BenchmarkTST(b *testing.B) {
 	benchmarkTree(b, &TST{})
+}
+
+func BenchmarkTrieMO(b *testing.B) {
+	benchmarkTree(b, &TrieMO{})
 }
 
 func benchmarkTree(b *testing.B, tr tree) {

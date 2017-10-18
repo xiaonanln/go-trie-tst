@@ -8,24 +8,31 @@ import (
 
 	"math/rand"
 
-	"fmt"
-
-	"os"
-
 	"github.com/xiaonanln/go-trie-tst"
 )
 
 func testRoutine() {
 	trie := &trietst.Trie{}
 	tst := &trietst.TST{}
+	triemo := &trietst.TrieMO{}
 
+	counter := 0
 	for {
 		slen := 5 + rand.Intn(10)
 		s := randString(slen)
-		fmt.Fprintf(os.Stderr, "|%s", s)
 		trie.Set(s, struct{}{})
 		tst.Set(s, struct{}{})
-		time.Sleep(time.Millisecond)
+		triemo.Set(s, struct{}{})
+
+		_ = trie.Get(s)
+		_ = tst.Get(s)
+		_ = triemo.Get(s)
+
+		counter += 1
+		if counter%10000 == 0 {
+			println(counter)
+		}
+		time.Sleep(time.Microsecond * 100)
 	}
 }
 
