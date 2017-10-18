@@ -35,7 +35,7 @@ Dropped 42 nodes (cum <= 6.11MB)
 ```go
 import "github.com/xiaonanln/go-trie-tst"
 
-var tr trie_tst.TST // create a TST
+var tr trietst.TST // create a TST
 tr.Set("", 0) // set "" to 0
 tr.Set("abc", 3) // set "abc" to 3
 tr.Get("") // == 0
