@@ -18,10 +18,8 @@ func (t *TrieMO) Child(c byte) *TrieMO {
 	if t.moreChildren == nil {
 		// find child in lessChildren
 		for _, child := range t.lessChildren {
-			if child.st != nil {
-				if child.key == c {
-					return child.st
-				}
+			if child.key == c {
+				return child.st
 			}
 		}
 
@@ -96,5 +94,28 @@ func (t *TrieMO) sub(s string, idx int) *TrieMO {
 		return t.Child(s[idx]).sub(s, idx+1)
 	} else {
 		return t
+	}
+}
+
+func (t *TrieMO) ForEach(f func(s string, val interface{})) {
+	var prefix []byte
+	t.forEach(f, prefix)
+}
+
+func (t *TrieMO) forEach(f func(s string, val interface{}), prefix []byte) {
+	if t.Val != nil {
+		f(string(prefix), t.Val)
+	}
+
+	if t.moreChildren == nil {
+		for _, lc := range t.lessChildren {
+			lc.st.forEach(f, append(prefix, lc.key))
+		}
+	} else {
+		for c, st := range t.moreChildren {
+			if st != nil {
+				st.forEach(f, append(prefix, c))
+			}
+		}
 	}
 }

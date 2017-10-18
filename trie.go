@@ -54,3 +54,20 @@ func (t *Trie) sub(s string, idx int) *Trie {
 		return t
 	}
 }
+
+func (t *Trie) ForEach(f func(s string, val interface{})) {
+	var prefix []byte
+	t.forEach(f, prefix)
+}
+
+func (t *Trie) forEach(f func(s string, val interface{}), prefix []byte) {
+	if t.Val != nil {
+		f(string(prefix), t.Val)
+	}
+
+	for c, st := range t.children {
+		if st != nil {
+			st.forEach(f, append(prefix, byte(c)))
+		}
+	}
+}

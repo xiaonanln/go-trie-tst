@@ -11,6 +11,7 @@ import (
 type tree interface {
 	Set(s string, val interface{})
 	Get(s string) (val interface{})
+	ForEach(f func(s string, val interface{}))
 }
 
 func TestTrie(t *testing.T) {
@@ -51,6 +52,9 @@ func testSearchTree(t *testing.T, tr tree) {
 	assert.Equal(t, subtr.Get("b"), nil)
 	assert.Equal(t, subtr.Get("c"), 3)
 
+	tr.ForEach(func(s string, val interface{}) {
+		t.Logf("%s = %v", s, val)
+	})
 	//testTreeMemoryAlloc(t, tr)
 }
 
@@ -95,5 +99,8 @@ func benchmarkTree(b *testing.B, tr tree) {
 			tr.Set(s, i)
 			tr.Get(s)
 		}
+
+		tr.ForEach(func(s string, val interface{}) {
+		})
 	}
 }
